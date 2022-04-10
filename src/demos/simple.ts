@@ -2,10 +2,10 @@ export default {
   name: 'Simple',
   schema: {
     description: 'A simple from example.',
-    type: 'string',
+    type: 'object',
     required: ['firstName', 'lastName'],
     properties: {
-      fistName: {
+      firstName: {
         type: 'string',
         default: 'Chuck',
       },
