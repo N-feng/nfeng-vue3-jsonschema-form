@@ -1,8 +1,8 @@
 import { defineComponent, inject } from 'vue'
 
-import { FieldPropsDefine } from '../types'
+import { FieldPropsDefine, CommonFieldType } from '../types'
 import { isObject } from '../utils'
-import { SchemaFormContextKey } from '../context'
+import { SchemaFormContextKey, useVJSFConext } from '../context'
 
 // import SchemaItem from '../SchemaItem'
 
@@ -20,22 +20,11 @@ const schema = {
   },
 }
 
-const TypeHelperComponent = defineComponent({
-  props: FieldPropsDefine,
-})
-
-type SchemaItemDefine = typeof TypeHelperComponent
-
 export default defineComponent({
   name: 'ObjectField',
   props: FieldPropsDefine,
   setup(props) {
-    const context: { SchemaItem: SchemaItemDefine } | undefined =
-      inject(SchemaFormContextKey)
-
-    if (!context) {
-      throw Error('SchemaForm should be used')
-    }
+    const context = useVJSFConext()
 
     const handleObjectFieldChange = (key: string, v: string) => {
       const value: any = isObject(props.value) ? props.value : {}
