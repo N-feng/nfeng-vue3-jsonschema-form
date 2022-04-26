@@ -51,6 +51,8 @@ const ArrayItemWrapper = defineComponent({
   setup(props, { slots }) {
     const classesRef = useStyles()
 
+    const context = useVJSFConext()
+
     const handleAdd = () => props.onAdd(props.index)
     const handleDown = () => props.onDown(props.index)
     const handleUp = () => props.onUp(props.index)
@@ -58,6 +60,7 @@ const ArrayItemWrapper = defineComponent({
 
     return () => {
       const classes = classesRef.value
+
       return (
         <div class={classes.container}>
           <div class={classes.actions}>
@@ -135,6 +138,7 @@ export default defineComponent({
     }
 
     return () => {
+      const SelectionWidget = context.theme.widgets.SelectionWidget
       const { schema, rootSchema, value } = props
 
       const SchemaItem = context.SchemaItem
