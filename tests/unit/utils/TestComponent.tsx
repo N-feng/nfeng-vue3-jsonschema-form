@@ -2,6 +2,19 @@ import { defineComponent, PropType } from 'vue'
 import JsonSchemaForm, { Schema, ThemeProvider } from '../../../lib'
 import defaultTheme from '../../../lib/theme-default'
 
+// vjsf-theme-default // import {ThemeProvider} from 'vue-jsonschema-form'
+// vue3-jsonschema-form
+
+export const ThemeDefaultProvider = defineComponent({
+  setup(p, { slots }) {
+    return () => (
+      <ThemeProvider theme={defaultTheme as any}>
+        {slots.default && slots.default()}
+      </ThemeProvider>
+    )
+  },
+})
+
 export default defineComponent({
   name: 'TestComponent',
   props: {
@@ -19,9 +32,9 @@ export default defineComponent({
   },
   setup(props) {
     return () => (
-      <ThemeProvider theme={defaultTheme as any}>
+      <ThemeDefaultProvider>
         <JsonSchemaForm {...props} />
-      </ThemeProvider>
+      </ThemeDefaultProvider>
     )
   },
 })

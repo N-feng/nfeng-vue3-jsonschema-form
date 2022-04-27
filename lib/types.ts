@@ -89,10 +89,16 @@ export const SelectionWidgetPropsDefine = {
   },
 } as const
 
-export type CommonWidgetDefine = DefineComponent<typeof CommonWidgetPropsDefine>
+export type CommonWidgetDefine = DefineComponent<
+  typeof CommonWidgetPropsDefine,
+  {},
+  {}
+>
 
 export type SelectionWidgetDefine = DefineComponent<
-  typeof SelectionWidgetPropsDefine
+  typeof SelectionWidgetPropsDefine,
+  {},
+  {}
 >
 
 export enum SelectionWidgetNames {

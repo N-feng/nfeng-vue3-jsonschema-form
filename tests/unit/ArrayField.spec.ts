@@ -1,10 +1,17 @@
 import { mount } from '@vue/test-utils'
 
-import JsonSchemaForm, { ArrayField, NumberField, StringField } from '../../lib'
+import {
+  SelectionWidget,
+  ArrayField,
+  NumberField,
+  StringField,
+} from '../../lib'
+
+import TestComponent from './utils/TestComponent'
 
 describe('ArrayField', () => {
   it('should render multi type', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(TestComponent, {
       props: {
         schema: {
           type: 'array',
@@ -33,7 +40,7 @@ describe('ArrayField', () => {
   })
 
   it('should render single type', () => {
-    const wrapper = mount(JsonSchemaForm, {
+    const wrapper = mount(TestComponent, {
       props: {
         schema: {
           type: 'array',
@@ -57,26 +64,28 @@ describe('ArrayField', () => {
     // expect(num.exists()).toBeTruthy()
   })
 
-  // it('should render single type', () => {
-  //   const wrapper = mount(JsonSchemaForm, {
-  //     props: {
-  //       schema: {
-  //         type: 'array',
-  //         items: {
-  //           type: 'string',
-  //           enum: ['1', '2', '3'],
-  //         },
-  //       },
-  //       value: [],
-  //       onChange: () => {},
-  //     },
-  //   })
+  it('should render single type', () => {
+    const wrapper = mount(TestComponent, {
+      props: {
+        schema: {
+          type: 'array',
+          items: {
+            type: 'string',
+            enum: ['1', '2', '3'],
+          },
+        },
+        value: [],
+        onChange: () => {
+          // do nothing
+        },
+      },
+    })
 
-  //   const arr = wrapper.findComponent(ArrayField)
-  //   const select = arr.findAllComponents(SelectionWidget)
-  //   // const num = arr.findComponent(NumberField)
+    const arr = wrapper.findComponent(ArrayField)
+    const select = arr.findComponent(SelectionWidget)
+    // const num = arr.findComponent(NumberField)
 
-  //   expect(select.exits()).toBeTruthy()
-  //   // expect(num.exists()).toBeTruthy()
-  // })
+    expect(select.exists()).toBeTruthy()
+    // expect(num.exists()).toBeTruthy()
+  })
 })

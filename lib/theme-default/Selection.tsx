@@ -30,7 +30,7 @@ const Selection = defineComponent({
       const { options } = props
       return (
         <select multiple={true} v-model={currentValueRef.value}>
-          {options?.map((op) => (
+          {options.map((op) => (
             <option value={op.value}>{op.key}</option>
           ))}
         </select>
