@@ -3,6 +3,7 @@ import {
   PropType,
   provide,
   reactive,
+  ref,
   Ref,
   shallowRef,
   watch,
@@ -17,10 +18,10 @@ import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
 import { validateFormData, ErrorSchema } from './validator'
 interface ContextRef {
-  doValidate: () => {
+  doValidate: () => Promise<{
     errors: any[]
     valid: boolean
-  }
+  }>
 }
 
 const defaultAjvOptions: Options = {
@@ -52,6 +53,9 @@ export default defineComponent({
       type: String,
       default: 'zh',
     },
+    customValidate: {
+      type: Function as PropType<(data: any, errors: any) => void>,
+    },
   },
   setup(props, { slots, emit, attrs }) {
     const handleChange = (v: any) => {
@@ -74,29 +78,51 @@ export default defineComponent({
       })
     })
 
+    const validateResolveRef = ref()
+    const validateIndex = ref(0)
+
+    watch(
+      () => props.value,
+      () => {
+        if (validateResolveRef.value) {
+          doValidate()
+        }
+      },
+      { deep: true },
+    )
+
+    async function doValidate() {
+      console.log('start validate -------->')
+      const index = (validateIndex.value += 1)
+      const result = await validateFormData(
+        validatorRef.value,
+        props.value,
+        props.schema,
+        props.locale,
+        props.customValidate,
+      )
+
+      if (index !== validateIndex.value) return
+      console.log('end validate -------->')
+
+      errorSchemaRef.value = result.errorSchema
+
+      validateResolveRef.value(result)
+      validateResolveRef.value = undefined
+
+      // return result
+    }
+
     watch(
       () => props.contextRef,
       () => {
         if (props.contextRef) {
           props.contextRef.value = {
             doValidate() {
-              console.log('--------->')
-
-              // const valid = validatorRef.value.validate(
-              //   props.schema,
-              //   props.value,
-              // ) as boolean
-
-              const result = validateFormData(
-                validatorRef.value,
-                props.value,
-                props.schema,
-                props.locale,
-              )
-
-              errorSchemaRef.value = result.errorSchema
-
-              return result
+              return new Promise((resolve) => {
+                validateResolveRef.value = resolve
+                doValidate()
+              })
             },
           }
         }

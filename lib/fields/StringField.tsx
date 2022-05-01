@@ -15,7 +15,7 @@ export default defineComponent({
     const TextWidgetRef = getWidget(CommonWidgetNames.TextWidget)
 
     return () => {
-      const { schema, rootSchema, errorSchema, ...rest } = props
+      const { rootSchema, errorSchema, ...rest } = props
 
       const TextWidget = TextWidgetRef.value
 

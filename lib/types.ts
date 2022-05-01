@@ -43,6 +43,7 @@ export interface Schema {
   multipleOf?: number
   exclusiveMaximum?: number
   exclusiveMinimum?: number
+  title?: string
 }
 
 export const FieldPropsDefine = {
@@ -81,6 +82,10 @@ export const CommonWidgetPropsDefine = {
   },
   errors: {
     type: Array as PropType<string[]>,
+  },
+  schema: {
+    type: Object as PropType<Schema>,
+    required: true,
   },
 } as const
 

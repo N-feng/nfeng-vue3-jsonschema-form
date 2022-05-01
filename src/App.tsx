@@ -87,6 +87,7 @@ export default defineComponent({
       schemaCode: string
       dataCode: string
       uiSchemaCode: string
+      customValidate: ((d: any, e: any) => void) | undefined
     } = reactive({
       schema: null,
       data: {},
@@ -94,17 +95,19 @@ export default defineComponent({
       schemaCode: '',
       dataCode: '',
       uiSchemaCode: '',
+      customValidate: undefined,
     })
 
     watchEffect(() => {
       const index = selectedRef.value
-      const d = demos[index]
+      const d: any = demos[index]
       demo.schema = d.schema
       demo.data = d.default
       demo.uiSchema = d.uiSchema
       demo.schemaCode = toJson(d.schema)
       demo.dataCode = toJson(d.default)
       demo.uiSchemaCode = toJson(d.uiSchema)
+      demo.customValidate = d.customValidate
     })
 
     const methodRef: Ref<any> = ref()
@@ -134,10 +137,20 @@ export default defineComponent({
     const handleUISchemaChange = (v: string) => handleCodeChange('uiSchema', v)
 
     const contextRef = ref()
+    const nameRef = ref()
+
+    function validateForm() {
+      contextRef.value.doValidate().then((result: any) => {
+        console.log(result, '......')
+      })
+    }
 
     return () => {
       const classes = classesRef.value
       const selected = selectedRef.value
+
+      // console.log(methodRef, nameRef )
+
       return (
         // <StyleThemeProvider>
         // <VJSFThemeProvider theme={theme as any}>
@@ -188,13 +201,11 @@ export default defineComponent({
                   onChange={handleChange}
                   value={demo.data}
                   contextRef={contextRef}
+                  ref={nameRef}
+                  customValidate={demo.customValidate}
                 />
               </ThemeProvider>
-              <button
-                onClick={() => console.log(contextRef.value.doValidate())}
-              >
-                校 验
-              </button>
+              <button onClick={validateForm}>校 验</button>
             </div>
           </div>
         </div>
