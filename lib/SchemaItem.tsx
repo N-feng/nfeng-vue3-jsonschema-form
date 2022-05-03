@@ -8,14 +8,19 @@ import ObjectField from './fields/ObjectField'
 import ArrayField from './fields/ArrayField'
 
 import { retrieveSchema } from './utils'
+import { useVJSFConext } from './context'
 
 export default defineComponent({
   name: 'SchemaItem',
   props: FieldPropsDefine,
   setup(props) {
+    const formContext = useVJSFConext()
+
     const retrievedSchemaRef = computed(() => {
       const { schema, rootSchema, value } = props
-      return retrieveSchema(schema, rootSchema, value)
+      return formContext.transformSchemaRef.value(
+        retrieveSchema(schema, rootSchema, value),
+      )
     })
 
     return () => {
