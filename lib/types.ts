@@ -51,6 +51,10 @@ export const FieldPropsDefine = {
     type: Object as PropType<Schema>,
     required: true,
   },
+  uiSchema: {
+    type: Object as PropType<UISchema>,
+    required: true,
+  },
   value: {
     required: true,
   },
@@ -86,6 +90,9 @@ export const CommonWidgetPropsDefine = {
   schema: {
     type: Object as PropType<Schema>,
     required: true,
+  },
+  options: {
+    type: Object as PropType<{ [keys: string]: any }>,
   },
 } as const
 
@@ -123,4 +130,14 @@ export interface Theme {
     [CommonWidgetNames.TextWidget]: CommonWidgetDefine
     [CommonWidgetNames.NumberWidget]: CommonWidgetDefine
   }
+}
+
+export type UISchema = {
+  widget?: string | CommonWidgetDefine
+  properties?: {
+    [key: string]: UISchema
+  }
+  items?: UISchema | UISchema[]
+} & {
+  [key: string]: any // w:
 }

@@ -98,7 +98,6 @@ export async function validateFormData(
   }
 
   const errorSchema = toErrorSchema(errors)
-  console.log('errorSchema: ', errorSchema)
 
   if (!customValidate) {
     return {
@@ -119,11 +118,8 @@ export async function validateFormData(
    * raw.obj.a
    */
   const proxy = createErrorProxy()
-  console.log('proxy: ', proxy)
   await customValidate(formData, proxy)
-  console.log('customValidate: ', proxy)
   const newErrorSchema = mergeObjects(errorSchema, proxy, true)
-  console.log('newErrorSchema: ', newErrorSchema)
 
   return {
     errors,
