@@ -92,7 +92,7 @@ export async function validateFormData(
     errors = [
       ...errors,
       {
-        message: validationError.message,
+        message: (validationError as any).message,
       } as TransformedErrorObject,
     ]
   }

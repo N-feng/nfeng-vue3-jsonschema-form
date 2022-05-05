@@ -8,10 +8,10 @@
     "build:theme": "TYPE=lib vue-cli-service build --target lib --name theme-default/index --no-clean lib/theme-default/index.tsx",
     "build": "rimraf dist && npm run build:core && npm run build:theme",
     "test:unit": "vue-cli-service test:unit",
+    "test:unit:cov": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@types/lodash.topath": "^4.5.7",
     "ajv": "^6.12.6",
     "ajv-i18n": "^4.2.0",
     "core-js": "^3.6.5",
@@ -21,17 +21,17 @@
     "jss-preset-default": "^10.9.0",
     "lodash.topath": "^4.5.2",
     "lodash.union": "^4.6.0",
-    "monaco-editor": "^0.30.1",
-    "monaco-editor-webpack-plugin": "^6.0.0",
     "vue": "^3.0.0",
     "vue-jss": "0.0.4"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
     "@types/json-schema-merge-allof": "^0.6.1",
+    "@types/lodash.topath": "^4.5.7",
     "@types/lodash.union": "^4.6.6",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "@vue/babel-plugin-jsx": "^1.1.1",
     "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-eslint": "~4.5.13",
     "@vue/cli-plugin-typescript": "~4.5.13",
@@ -46,11 +46,13 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
     "lint-staged": "^9.5.0",
+    "monaco-editor": "^0.30.1",
+    "monaco-editor-webpack-plugin": "^6.0.0",
     "node-sass": "^4.12.0",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^8.0.2",
-    "typescript": "~4.1.5",
+    "typescript": "^4.6.4",
     "vue-jest": "^5.0.0-0"
   },
   "gitHooks": {

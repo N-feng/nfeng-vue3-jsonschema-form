@@ -18,11 +18,15 @@ export interface Schema {
   type: SchemaTypes | string
   const?: any
   format?: string
+
+  title?: string
   default?: any
+
   properties?: {
     [key: string]: Schema
   }
   items?: Schema | Schema[] | SchemaRef
+  uniqueItems?: any
   dependencies?: {
     [key: string]: string[] | Schema | SchemaRef
   }
@@ -33,6 +37,7 @@ export interface Schema {
   // vjsf?: VueJsonSchemaConfig
   required?: string[]
   enum?: any[]
+  enumNames?: any[]
   enumKeyValue?: any[]
   additionalProperties?: any
   additionalItems?: Schema
@@ -44,7 +49,6 @@ export interface Schema {
   multipleOf?: number
   exclusiveMaximum?: number
   exclusiveMinimum?: number
-  title?: string
 }
 
 export const FieldPropsDefine = {
@@ -110,10 +114,16 @@ export const SelectionWidgetPropsDefine = {
   },
 } as const
 
-export type CommonWidgetDefine = DefineComponent<typeof CommonWidgetPropsDefine>
+export type CommonWidgetDefine = DefineComponent<
+  typeof CommonWidgetPropsDefine,
+  {},
+  {}
+>
 
 export type SelectionWidgetDefine = DefineComponent<
-  typeof SelectionWidgetPropsDefine
+  typeof SelectionWidgetPropsDefine,
+  {},
+  {}
 >
 
 export enum SelectionWidgetNames {
@@ -154,7 +164,7 @@ interface VjsfKeywordDefinition {
   async?: boolean
   $data?: boolean
   errors?: boolean | string
-  metaSchema?: any
+  metaSchema?: object
   // schema: false makes validate not to expect schema (ValidateFunction)
   schema?: boolean
   statements?: boolean
@@ -164,9 +174,9 @@ interface VjsfKeywordDefinition {
   // one and only one of the following properties should be present
   macro?: (
     schema: any,
-    parentSchema: any,
+    parentSchema: object,
     it: CompilationContext,
-  ) => any | boolean
+  ) => object | boolean
 }
 
 export interface CustomKeyword {
