@@ -12,4 +12,5 @@ module.exports = {
   transform: {
     '^.+\\.vue$': 'vue-jest',
   },
+  setupFiles: ['core-js'],
 }
