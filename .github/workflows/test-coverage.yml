@@ -23,9 +23,10 @@ jobs:
           CI: true
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v1.0.5
         with:
           flags: unittests
           token: ${{secrets.CODECOV_TOKEN}}
           file: ./coverage/clover.xml
+          yml: ./codecov.yml
           fail_ci_if_error: true
