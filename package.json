@@ -9,7 +9,7 @@
     "build": "rimraf dist && npm run build:core && npm run build:theme",
     "test:unit": "vue-cli-service test:unit",
     "test:unit:cov": "vue-cli-service test:unit --coverage",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "lint": "vue-cli-service lint"
   },
   "publishConfig": {
